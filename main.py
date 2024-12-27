@@ -27,11 +27,23 @@ def convert_survey_data(input_path, output_path):
     data = defaultdict(dict)
     emails = {}
 
+    answer_mapping = {
+        'A': 1,
+        'B': 2,
+        'C': 3,
+        'D': 4,
+        'E': 5,
+        'F': 6
+    }
+
     for row in sheet.iter_rows(min_row=2, values_only=True):
         name = row[2]  # Column C: Tên người khảo sát
         email = row[3]  # Column D: Email
         question = row[4]  # Column E: Câu hỏi
         answer = row[5]  # Column F: Câu trả lời
+        
+        if answer in answer_mapping:
+            answer = answer_mapping[answer]
 
         if question not in questions:
             questions.append(question)
